@@ -6,3 +6,5 @@ The advancement of Large Language Models (LLMs) has led to increasing concerns a
 ![overview](https://github.com/yepengliu/adaptive-text-watermark/assets/40141652/82ee9722-6398-405b-b3df-a817c34cf454)
 
 
+## Installation
+
