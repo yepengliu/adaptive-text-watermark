@@ -11,4 +11,35 @@ The advancement of Large Language Models (LLMs) has led to increasing concerns a
 
 
 ## Installation
+```
+# download the code
+git clone https://github.com/yepengliu/adaptive-text-watermark.git
+cd adaptive-text-watermark
 
+# install the required environment 
+pip install -r requirements.txt
+```
+
+## How to use
+### Demo usage: generate a watermarked text given a prompt
+```
+import torch
+from sentence_transformers import SentenceTransformer
+from model import TransformModel
+from utils import load_model
+from watermark import Watermark
+
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+# load watermarking model
+watermark_model, watermark_tokenizer = load_model(args.watermark_model)
+# load measurement model
+measure_model, measure_tokenizer = load_model(args.measure_model)
+# load semantic embedding model
+embedding_model = SentenceTransformer(args.embedding_model).to(device)
+embedding_model.eval()
+# load semantic mapping model
+transform_model = TransformModel()
+transform_model.load_state_dict(torch.load(args.transform_model))
+transform_model.to(device)
+transform_model.eval()
+```
