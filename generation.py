@@ -32,8 +32,8 @@ def main(args):
     with open(args.transform_mapping_list, 'r') as f:
         mapping_list = json.load(f)
     # load test dataset. Here we use C4 realnewslike dataset as an example. Feel free to use your own dataset.
-    realnewslike = "https://huggingface.co/datasets/allenai/c4/resolve/1ddc917116b730e1859edef32896ec5c16be51d0/realnewslike/c4-train.00000-of-00512.json.gz"
-    dataset = load_dataset('json', data_files=realnewslike)
+    data = ""
+    dataset = load_dataset('json', data_files=data)
     dataset = pre_process(dataset, min_length=args.min_new_tokens, data_size=500)   # [{text0: 'text0', text: 'text'}]
 
 
