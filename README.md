@@ -78,3 +78,15 @@ unwatermark_score = watermark.detection(unwatermarked_text)
 # detect watermarked text
 watermark_score = watermark.detection(watermarked_text)
 ```
+
+
+## Citation
+If you find this repository useful for your research and applications, please cite our paper:
+```
+@article{liu2024adaptive,
+  title={Adaptive Text Watermark for Large Language Models},
+  author={Liu, Yepeng and Bu, Yuheng},
+  journal={arXiv preprint arXiv:2401.13927},
+  year={2024}
+}
+```
