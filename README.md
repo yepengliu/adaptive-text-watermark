@@ -21,7 +21,7 @@ pip install -r requirements.txt
 ```
 
 ## How to use
-### Demo usage: generate a watermarked text given a prompt
+### Demo usage: generate a watermarked text given a prompt using OPT-6.7B
 ```
 import torch
 from sentence_transformers import SentenceTransformer
@@ -31,15 +31,50 @@ from watermark import Watermark
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 # load watermarking model
-watermark_model, watermark_tokenizer = load_model(args.watermark_model)
+watermark_model, watermark_tokenizer = load_model('facebook/opt-6.7b')
 # load measurement model
-measure_model, measure_tokenizer = load_model(args.measure_model)
+measure_model, measure_tokenizer = load_model('gpt2-large')
 # load semantic embedding model
-embedding_model = SentenceTransformer(args.embedding_model).to(device)
+embedding_model = SentenceTransformer('sentence-transformers/all-mpnet-base-v2').to(device)
 embedding_model.eval()
 # load semantic mapping model
 transform_model = TransformModel()
-transform_model.load_state_dict(torch.load(args.transform_model))
+transform_model.load_state_dict(torch.load('model/transform_model.pth'))
 transform_model.to(device)
 transform_model.eval()
+# load mapping list
+with open('model/mapping_opt.json', 'r') as f:
+    mapping_list = json.load(f)
+
+watermark = Watermark(device=device,
+                  watermark_tokenizer=watermark_tokenizer,
+                  measure_tokenizer=measure_tokenizer,
+                  watermark_model=watermark_model,
+                  measure_model=measure_model,
+                  embedding_model=embedding_model,
+                  transform_model=transform_model,
+                  mapping_list=mapping_list,
+                  alpha=2,
+                  top_k=50,
+                  top_p=0.9,
+                  repetition_penalty=1.1,
+                  no_repeat_ngram_size=0,
+                  max_new_tokens=230,
+                  min_new_tokens=170,
+                  secret_string='The quick brown fox jumps over the lazy dog',
+                  measure_threshold=50,
+                  delta_0=1,
+                  delta=1.5,
+                  )
+
+prompt = ""
+# generate un-watermarked text
+unwatermarked_text = watermark.generate_unwatermarked(prompt)
+# generate watermarked text
+watermarked_text = watermark.generate_adaptive_watermarke(prompt)
+
+# detect un-watermarked text
+unwatermark_score = watermark.detection(unwatermarked_text)
+# detect watermarked text
+watermark_score = watermark.detection(watermarked_text)
 ```
