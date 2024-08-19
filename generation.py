@@ -25,11 +25,11 @@ def main(args):
     embedding_model.eval()
     # load semantic mapping model
     transform_model = SemanticModel()
-    transform_model.load_state_dict(torch.load(args.transform_model))
+    transform_model.load_state_dict(torch.load(args.semantic_model))
     transform_model.to(device)
     transform_model.eval()
     # load mapping list
-    vocalulary_size = 50272
+    vocalulary_size = 50272  # vacalulary size of LLM
     mapping_list = vocabulary_mapping(vocalulary_size, 384)
     # load test dataset. Here we use C4 realnewslike dataset as an example. Feel free to use your own dataset.
     data = ""
@@ -98,7 +98,7 @@ if __name__ == '__main__':
                         help='Measurement model.')
     parser.add_argument('--embedding_model', default='sentence-transformers/all-mpnet-base-v2', type=str, \
                         help='Semantic embedding model.')
-    parser.add_argument('--transform_model', default='', type=str, \
+    parser.add_argument('--semantic_model', default='', type=str, \
                         help='Load semantic mapping model parameters.')
     parser.add_argument('--alpha', default=2.0, type=float, \
                         help='Entropy threshold. May vary based on different measurement model. Plase select the best alpha by yourself.')
