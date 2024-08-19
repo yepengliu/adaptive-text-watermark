@@ -1,6 +1,6 @@
 import torch
 from transformers import AutoTokenizer, AutoModelForCausalLM
-
+import random
 
 
 def load_model(model_name):
@@ -8,6 +8,9 @@ def load_model(model_name):
     model = AutoModelForCausalLM.from_pretrained(model_name, device_map='auto')
     model.eval()
     return model, tokenizer
+
+def vocabulary_mapping(vocab_size, sm_output_dim):
+    return [random.randint(0, sm_output_dim-1) for _ in range(vocab_size)]
 
 def pre_process(dataset, min_length, data_size=500):
     data = []
