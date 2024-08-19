@@ -1,6 +1,6 @@
 import torch
 from sentence_transformers import SentenceTransformer
-from model import TransformModel
+from model import SemanticModel
 import json
 import argparse
 from datasets import load_dataset
@@ -9,7 +9,7 @@ from tqdm import tqdm
 import nltk
 # nltk.download('punkt')
 
-from utils import load_model, pre_process
+from utils import load_model, pre_process, vocabulary_mapping
 from watermark import Watermark
 
 
@@ -24,13 +24,13 @@ def main(args):
     embedding_model = SentenceTransformer(args.embedding_model).to(device)
     embedding_model.eval()
     # load semantic mapping model
-    transform_model = TransformModel()
+    transform_model = SemanticModel()
     transform_model.load_state_dict(torch.load(args.transform_model))
     transform_model.to(device)
     transform_model.eval()
     # load mapping list
-    with open(args.transform_mapping_list, 'r') as f:
-        mapping_list = json.load(f)
+    vocalulary_size = 50272
+    mapping_list = vocabulary_mapping(vocalulary_size, 384)
     # load test dataset. Here we use C4 realnewslike dataset as an example. Feel free to use your own dataset.
     data = ""
     dataset = load_dataset('json', data_files=data)
@@ -98,10 +98,8 @@ if __name__ == '__main__':
                         help='Measurement model.')
     parser.add_argument('--embedding_model', default='sentence-transformers/all-mpnet-base-v2', type=str, \
                         help='Semantic embedding model.')
-    parser.add_argument('--transform_model', default='model/transform_model.pth', type=str, \
+    parser.add_argument('--transform_model', default='', type=str, \
                         help='Load semantic mapping model parameters.')
-    parser.add_argument('--transform_mapping_list', default='model/mapping_opt.json', type=str, \
-                        help='Load mapping list. Different model will have different mapping list.')
     parser.add_argument('--alpha', default=2.0, type=float, \
                         help='Entropy threshold. May vary based on different measurement model. Plase select the best alpha by yourself.')
     parser.add_argument('--max_new_tokens', default=230, type=int, \
