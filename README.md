@@ -25,8 +25,8 @@ pip install -r requirements.txt
 ```
 import torch
 from sentence_transformers import SentenceTransformer
-from model import TransformModel
-from utils import load_model
+from model import SemanticModel
+from utils import load_model, vocabulary_mapping
 from watermark import Watermark
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -43,8 +43,8 @@ transform_model.load_state_dict(torch.load('model/transform_model.pth'))
 transform_model.to(device)
 transform_model.eval()
 # load mapping list
-with open('model/mapping_opt.json', 'r') as f:
-    mapping_list = json.load(f)
+vocalulary_size = 50272
+mapping_list = vocabulary_mapping(vocalulary_size, 384)
 
 watermark = Watermark(device=device,
                   watermark_tokenizer=watermark_tokenizer,
