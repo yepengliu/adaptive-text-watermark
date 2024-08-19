@@ -39,7 +39,7 @@ embedding_model = SentenceTransformer('sentence-transformers/all-mpnet-base-v2')
 embedding_model.eval()
 # load semantic mapping model
 transform_model = SemanticModel()
-transform_model.load_state_dict(torch.load('model/transform_model.pth'))
+transform_model.load_state_dict(torch.load('model/semantic_mapping_model.pth'))
 transform_model.to(device)
 transform_model.eval()
 # load mapping list
