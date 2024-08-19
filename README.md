@@ -38,7 +38,7 @@ measure_model, measure_tokenizer = load_model('gpt2-large')
 embedding_model = SentenceTransformer('sentence-transformers/all-mpnet-base-v2').to(device)
 embedding_model.eval()
 # load semantic mapping model
-transform_model = TransformModel()
+transform_model = SemanticModel()
 transform_model.load_state_dict(torch.load('model/transform_model.pth'))
 transform_model.to(device)
 transform_model.eval()
