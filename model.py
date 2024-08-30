@@ -17,7 +17,7 @@ class ResidualBlock(nn.Module):
 
 class SemanticModel(nn.Module):
     def __init__(self, num_layers=2, input_dim=768, hidden_dim=512, output_dim=384):
-        super(TransformModel, self).__init__()
+        super(SemanticModel, self).__init__()
         
         self.layers = nn.ModuleList()
         
