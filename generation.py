@@ -29,8 +29,8 @@ def main(args):
     transform_model.to(device)
     transform_model.eval()
     # load mapping list
-    vocalulary_size = 50272  # vacalulary size of LLM
-    mapping_list = vocabulary_mapping(vocalulary_size, 384)
+    vocalulary_size = watermark_tokenizer.vocab_size  # vacalulary size of LLM. Notice: OPT is 50272
+    mapping_list = vocabulary_mapping(vocalulary_size, 384, seed=66)
     # load test dataset. Here we use C4 realnewslike dataset as an example. Feel free to use your own dataset.
     data = ""
     dataset = load_dataset('json', data_files=data)
