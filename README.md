@@ -43,8 +43,8 @@ transform_model.load_state_dict(torch.load('model/semantic_mapping_model.pth'))
 transform_model.to(device)
 transform_model.eval()
 # load mapping list
-vocalulary_size = 50272
-mapping_list = vocabulary_mapping(vocalulary_size, 384)
+vocalulary_size = watermark_tokenizer.vocab_size   # Notice: 50272 if OPT
+mapping_list = vocabulary_mapping(vocalulary_size, 384, seed=66)
 
 watermark = Watermark(device=device,
                   watermark_tokenizer=watermark_tokenizer,
