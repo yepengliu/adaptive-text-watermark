@@ -9,8 +9,9 @@ def load_model(model_name):
     model.eval()
     return model, tokenizer
 
-def vocabulary_mapping(vocab_size, sm_output_dim):
-    return [random.randint(0, sm_output_dim-1) for _ in range(vocab_size)]
+def vocabulary_mapping(vocab_size, model_output_dim, seed=66):
+    random.seed(seed)
+    return [random.randint(0, model_output_dim-1) for _ in range(vocab_size)]
 
 def pre_process(dataset, min_length, data_size=500):
     data = []
