@@ -324,5 +324,5 @@ class Watermark():
         
         normalized_score = sum(score)/len(score)
         normalized_score = normalized_score.item()
-        return normalized_score*100
+        return normalized_score
     
