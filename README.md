@@ -20,6 +20,9 @@ cd adaptive-text-watermark
 pip install -r requirements.txt
 ```
 
+## Semantic Mapping Model Training
+One trained Semantic Mapping Model is in 'model/'
+
 ## How to use
 ### Demo usage: generate a watermarked text given a prompt using OPT-6.7B
 ```
