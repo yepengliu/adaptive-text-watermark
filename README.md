@@ -21,7 +21,7 @@ pip install -r requirements.txt
 ```
 
 ## Semantic Mapping Model Training
-One trained Semantic Mapping Model is in 'model/'
+One trained Semantic Mapping Model is in `model/semantic_mapping_model.pth` for direct use. Feel free to train your own model using `smm_training.ipynb`.
 
 ## How to use
 ### Demo usage: generate a watermarked text given a prompt using OPT-6.7B
